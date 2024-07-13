@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Tool</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Converter</h1>
+        <div>
+            <label for="decimalInput">Decimal to Binary:</label>
+            <input type="number" id="decimalInput" placeholder="Enter decimal number">
+            <button onclick="convertToBinary()">Convert</button>
+            <div class="result" id="binaryResult"></div>
+        </div>
+        <div>
+            <label for="binaryInput">Binary to Decimal:</label>
+            <input type="number" id="binaryInput" placeholder="Enter binary number">
+            <button onclick="convertToDecimal()">Convert</button>
+            <div class="result" id="decimalResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function convertToBinary() {
+    const decimal = document.getElementById('decimalInput').value;
+    fetch(`/convert/decimalToBinary?decimal=${decimal}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('binaryResult').innerText = `Binary: ${data}`;
+        });
+}
+
+function convertToDecimal() {
+    const binary = document.getElementById('binaryInput').value;
+    fetch(`/convert/binaryToDecimal?binary=${binary}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('decimalResult').innerText = `Decimal: ${data}`;
+        });
+}
+document.getElementById('decimalInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                convertToBinary();
+            }
+        });
+
+        document.getElementById('binaryInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                convertToDecimal();
+            }
+        });
+
+    </script>
+</body>
+</html>
